@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/677522160f.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<style>
+    
+    /* .container{
+        overflow: hidden;
+        display: block;
+        align-items: center;
+        text-align: center;
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        margin: auto;
+        overflow-y: scroll; 
+        
+    } */
+    .buttons{
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .button{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    #generate-button{
+        margin-top: 30px;
+        background-color: rgb(41, 152, 189);
+        color: white;
+        width: 30%;
+        height: 50px;
+        outline: none;
+        border-radius: 10px;
+        border: none;
+
+    }
+    .button:hover{
+        cursor: pointer;
+    }
+    #add-button{
+        background: none;
+        border: none;    
+    }
+    .video-details{
+        display: flex;
+        flex-direction: column;
+        margin: auto ;
+        margin-top: 30px;
+        align-items: center;
+        text-align: center;
+        background-color: rgb(164, 217, 250);
+        width: 50%;
+        border-radius: 10px;
+        position: relative;
+    
+    }
+    .remove{
+        border: none;
+        background-color: white;
+        border-radius: 50%;
+        margin-top: 10px;
+        position: absolute;
+        top: 0;
+        right: 5px;
+        background-color: rgb(164, 217, 250);
+
+    }
+    .field{
+        width: 70%;
+        padding: 5px 10px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        
+
+    }
+    .input-details{
+        width: 40%;
+
+    }
+    .remove:hover{
+        cursor: pointer;
+    }
+    .pdf-input{
+        width: 100%;
+        margin: auto;
+        margin-top: 20px;
+        padding: 10px 10px;
+        border-radius: 10px;
+        border-color: lightskyblue;
+    }
+    .pdf-text{
+        margin-top: 10px;
+        padding-bottom: 0;
+    }
+    
+
+
+
+    /*end result*/
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body.overflow-hide{
+        overflow: hidden;
+    }
+    .embed-pdf{
+        height: 100%;
+        width: 100%;
+    }
+    .pdf-box{
+  
+        width: 100%;
+        position: relative;
+    }
+    .pdf-box .video-button{
+        position: absolute;
+        top: 30%;
+        right: 0;
+       
+       
+        
+    }
+    #btn{
+        height: 90px;
+        color: white;
+        cursor: pointer;
+        background: rgb(121, 141, 230);
+        display: block;
+        padding: 0 12px;
+        align-items: center;
+        text-decoration: none;
+        border-color: none;
+    }
+    /* #btn:hover{
+        background: violet;
+    } */
+    .videos{
+        display: none;
+        /* flex-direction: column; */
+        width: 300px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        position: relative;
+        transition: all 0.5s;
+       
+    }
+    .videos.active{
+        display: block;
+        overflow-y: auto;
+    } 
+    .innervid{
+        padding: 5px;
+        background-color: white;
+
+    }   
+    .full-box{
+        position: relative;
+        /* overflow: hidden; */
+        display: flex;
+        height: 100vh;
+        
+    }
+    #btn p{
+        writing-mode: vertical-lr;
+        text-orientation: t;
+        color: white;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    .innervid{
+        height: 180px;
+    }
+    .innervid video{
+        width: 100%;
+
+    }
+    p{
+        margin: 0;
+    }
+    video{
+        width: 100%;
+    }
+    .video-thumbnail{
+        width: 100%;
+        height: 150px;
+    }
+
+    
+    
+
+    
+</style>
+<body>
+
+    
+     
+    <div class="full-box">
+        <div class="container">
+            <form id="pdf-form">
+                <div class="pdf">
+                    <p class="pdf-text">PDF link*</p>
+                    <input class="pdf-input" name='pdflink' type="text" placeholder="Add your pdf link here" >
+                </div>
+                
+                <div class="input-fields">
+                    <div class="video-details">
+                        <button class="remove" type="button">
+                            <i class="fas fa-minus-circle">
+                            </i>
+                        </button>
+                        <input class="field" type="text" name="title[]"  placeholder="Add video title here">
+                        <input class="field" type="text" name="thumbnail[]" placeholder="Add video thumbnail url">
+                        <input class="field" type="text" name="url[]" placeholder="Add video url">
+                    </div>
+                    
+    
+                </div>
+                <div class="buttons">
+                    <button class="button" id="add-button" type="button"><i class="fas fa-3x fa-plus-circle"></i></button>
+                    <button class="button" id="generate-button" type="submit">Generate HTML</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- <div class="video-details">
+            <button class="remove">
+                <i class="fas fa-minus-circle"></i>
+            </button>
+            <input type="text" class="field" placeholder="enter video url">
+            <input type="url" class="field" placeholder="enter video url">
+            <input type="url" class="field" placeholder="enter video url">
+        </div> -->
+    
+    
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="show-video">
+                    <video  src=""  controls>
+                    </video>
+                </div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+        
+      
+    
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   <script>
+        $(document).ready(function() {
+            $('#add-button').click(function(e) {
+                e.preventDefault();
+                let input_fields = `<div class="video-details">
+                <button class="remove" type="button">
+                    <i class="fas fa-minus-circle">
+                    </i>
+                </button>
+                <input class="field" type="text" name="title[]"  placeholder="Add video title here">
+                <input class="field" type="text" name="thumbnail[]" placeholder="Add video thumbnail url">
+                <input class="field" type="text" name="url[]" placeholder="Add video url">
+            </div>`
+
+                $('.input-fields').append(input_fields)
+            })
+            $('.input-fields').on('click','.remove',function(e){
+                $(this).parent('div').remove();
+            })
+            $("#pdf-form").submit(function(e) {
+
+                e.preventDefault(); 
+
+                let pdfLink = $('.pdf-input').val();
+                let formData = new FormData(document.querySelector('#pdf-form'))
+                let values = []
+                let titles = document.getElementsByName('title[]');
+                let thumbnails = document.getElementsByName('thumbnail[]');
+                let urls = document.getElementsByName('url[]');
+  
+                for (let i = 0; i < titles.length; i++) {
+                    if(titles[i] != ''){
+                        values[i] = {
+                            'title' : titles[i].value,
+                            'thumbnail' : thumbnails[i].value,
+                            'url' : urls[i].value,
+                        }
+                    }
+                    
+                }
+                
+                
+                let finalInput =  {
+                    'pdflink' : pdfLink,
+                    'videos': values
+                }
+                
+
+                let html_append = `
+                <div class="pdf-box">
+                        <embed src="${finalInput.pdflink}" type="application/pdf" class="embed-pdf" >
+                        <div class="video-button">
+                            <button id="btn" onclick="allvideos()">
+                                <p class="innerbtn">Videos</p>
+                                <i class="fas fa-chevron-left" ></i>
+                            </button>
+                        </div>
+                            
+                    </div>
+                    
+                        
+                    <div class="videos">
+                        ${
+                            (finalInput.videos.length > 0 ) ?
+                            `${finalInput.videos.map((video)=>{
+                                return `<div class="innervid">
+                                    <img class="video-thumbnail" src="${video.thumbnail}" data-video-url="${video.url}"  data-title="${video.title}" alt="">
+                                    <p> ${video.title}</p>
+                                </div>`
+                            }).join('')}` : `<h3>No video(s) found in this chapter</h3>`
+                        }
+                            
+                            
+                            
+                    </div>
+                
+                
+                `;
+
+                $('.full-box').html(html_append)
+                $('body').addClass('overflow-hide')
+                
+                
+
+                });
+                
+                
+        });
+        $(document).on('click','.video-thumbnail',function(e){
+            let video_url = $(this).attr('data-video-url');
+            let video_title= $(this).attr('data-title');
+            $('.show-video video').attr('src',video_url)
+            $('.modal-title').text(video_title)
+
+            $('#exampleModal').modal('show')
+        
+        });
+        function allvideos(){
+            const a = document.querySelector('.videos');
+            a.classList.toggle('active')
+        }
+
+    </script>
+
+
+
+</body>
+</html>
